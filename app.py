@@ -88,7 +88,9 @@ with st.expander('Corrección en inglés'):
         st.markdown(f'<div class="text-area">{corrected_text}</div>', unsafe_allow_html=True)
 
 if st.button("Convertir a Voz"):
-    st.markdown('<div class="loader">Convirtiendo...</div>', unsafe_allow_html=True)
+    st.write('<div class="loader">Convirtiendo...</div>', unsafe_allow_html=True)
+    st.markdown('<p class="loader">Convirtiendo...</p>', unsafe_allow_html=True)
+    st.spinner("Convirtiendo...")
     time.sleep(2)
     if text1:
         result = translator.translate(text1, dest='en')
