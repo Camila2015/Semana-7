@@ -1,39 +1,50 @@
 import streamlit as st
 from textblob import TextBlob
 from googletrans import Translator
+import time
 
 translator = Translator()
 
-# Estilo CSS para personalizar la apariencia de la app
 st.markdown(
     """
     <style>
     body {
-        background-color: #f0f0f5;  /* Color de fondo general */
+        background-color: #f0f0f5;  
     }
     .title {
-        color: #4B0082;  /* Color del título */
+        color: #4B0082;  
     }
     .subheader {
-        color: #FF1493;  /* Color del subtítulo */
+        color: #FF1493;  
     }
     .text-area {
-        background-color: #FFC0CB;  /* Fondo rosado para el área de texto */
+        background-color: #FFC0CB;  
         padding: 10px;
         border-radius: 5px;
         margin: 10px 0;
     }
     .stButton>button {
-        background-color: #4B0082;  /* Color de fondo de los botones */
-        color: white;  /* Color del texto de los botones */
-        border: None;  /* Sin borde */
-        border-radius: 5px;  /* Esquinas redondeadas */
-        padding: 10px 20px;  /* Espaciado dentro del botón */
-        font-size: 16px;  /* Tamaño de fuente */
-        transition: background-color 0.3s ease;  /* Transición suave para el color */
+        background-color: #4B0082;  
+        color: white;  
+        border: None;  
+        border-radius: 5px;  
+        padding: 10px 20px;  
+        font-size: 16px;  
+        transition: background-color 0.3s ease;  
     }
     .stButton>button:hover {
-        background-color: #6A5ACD;  /* Color al pasar el cursor */
+        background-color: #6A5ACD;  
+    }
+    .loader {
+        display: none;
+        font-size: 20px;
+        color: #FF1493;
+        animation: blink 1s infinite;
+    }
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
     }
     </style>
     """,
@@ -74,11 +85,11 @@ with st.expander('Corrección en inglés'):
     if text2:
         blob2 = TextBlob(text2)
         corrected_text = blob2.correct()
-        # Aplicar el fondo rosado al texto corregido
         st.markdown(f'<div class="text-area">{corrected_text}</div>', unsafe_allow_html=True)
 
-# Botón para convertir texto a voz
 if st.button("Convertir a Voz"):
+    st.markdown('<div class="loader">Convirtiendo...</div>', unsafe_allow_html=True)
+    time.sleep(2)
     if text1:
         result = translator.translate(text1, dest='en')
         st.success(f'Traducción a Inglés: {result.text}')
